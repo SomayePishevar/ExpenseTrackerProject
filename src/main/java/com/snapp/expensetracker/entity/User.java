@@ -1,5 +1,6 @@
-package com.snapp.expensetracker.domain.entity;
+package com.snapp.expensetracker.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 @Table(name = "users")
 @Data
 @RequiredArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +23,12 @@ public class User {
     @Column(nullable = false , length = 64)
     private String password;
 
-    @Column(nullable = false, unique = true, length = 45)
-    private String email;
+    @Transient
+    private String confirmPassword;
 
-    @ManyToMany
-    private Set<Role> roles;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
+
+    @Column(nullable = false, length = 13)
+    private String phoneNumber;
 }
