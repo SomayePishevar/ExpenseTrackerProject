@@ -1,15 +1,14 @@
 package com.snapp.expensetracker.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
     @Id
@@ -26,8 +25,9 @@ public class User {
     private String confirmPassword;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private RoleEnum role;
 
-    @Column(nullable = false, length = 13)
+    @Column(nullable = false, unique = true, length = 13)
     private String phoneNumber;
 }

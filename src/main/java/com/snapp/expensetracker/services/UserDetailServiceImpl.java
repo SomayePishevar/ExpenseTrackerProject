@@ -1,4 +1,4 @@
-package com.snapp.expensetracker.service;
+package com.snapp.expensetracker.services;
 
 
 import com.snapp.expensetracker.entity.User;
