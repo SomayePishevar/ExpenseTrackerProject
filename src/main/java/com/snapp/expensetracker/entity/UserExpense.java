@@ -1,14 +1,21 @@
 package com.snapp.expensetracker.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "usercosts")
-public class UserCost {
+@Table(name = "userExpenses")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UserExpense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +30,11 @@ public class UserCost {
     private ExpenseCategory expenseCategory;
 
     @Column(nullable = false)
-    private String costDate;
+    private Date expenseDate;
 
     @Column(nullable = false)
-    private BigInteger costAmount;
+    private BigInteger expenseAmount;
+
+    @Transient
+    private Date startCalculateExpenseDate;
 }
