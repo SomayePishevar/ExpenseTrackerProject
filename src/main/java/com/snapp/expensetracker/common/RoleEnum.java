@@ -1,4 +1,4 @@
-package com.snapp.expensetracker.entity;
+package com.snapp.expensetracker.common;
 
 public enum RoleEnum {
 

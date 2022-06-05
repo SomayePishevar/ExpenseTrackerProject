@@ -1,5 +1,6 @@
 package com.snapp.expensetracker.entity;
 
+import com.snapp.expensetracker.common.RoleEnum;
 import lombok.*;
 
 import javax.persistence.*;
