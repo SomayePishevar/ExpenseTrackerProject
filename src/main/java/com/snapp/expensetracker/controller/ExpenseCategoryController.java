@@ -67,4 +67,12 @@ public class ExpenseCategoryController {
         expenseCategoryService.deleteById(id);
         return new ResponseEntity<>("category deleted successfully", HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/expenseCategories")
+    public ResponseEntity<List<String>> getAllCategoryNames(){
+        List<String> expenseCategoryNameList = expenseCategoryService.getAllExpenseCategoryName();
+        return new ResponseEntity<>(expenseCategoryNameList, HttpStatus.OK);
+    }
+
 }
