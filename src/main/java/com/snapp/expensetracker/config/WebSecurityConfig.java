@@ -1,6 +1,6 @@
-package com.snapp.expensetracker.web;
+package com.snapp.expensetracker.config;
 
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -14,20 +14,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Qualifier("userDetailServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private DataSource dataSource;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -37,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
                 .authorizeRequests()
+                .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/admin").hasAuthority("ADMIN")
                 .antMatchers("/user").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().authenticated()
@@ -47,18 +43,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationManager customAuthenticationManager() throws Exception {
-        return authenticationManager();
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
-
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-                .dataSource(dataSource).usersByUsernameQuery("select username, password from users where username=?")
-                .authoritiesByUsernameQuery("select username, role from users where username=?");
-    }
+
 }

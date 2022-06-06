@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/entrance")
+@RequestMapping("/api/auth")
 public class UserRegistrationAndLoginController {
 
     @Autowired
