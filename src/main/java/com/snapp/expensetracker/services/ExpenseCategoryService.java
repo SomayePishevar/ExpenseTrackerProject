@@ -10,4 +10,5 @@ public interface ExpenseCategoryService {
     List<ExpenseCategory> getAllExpenseCategories();
     ExpenseCategory save(ExpenseCategory expenseCategory);
     ExpenseCategory findById(long id);
+    ExpenseCategory update(ExpenseCategory expenseCategory, long id);
 }

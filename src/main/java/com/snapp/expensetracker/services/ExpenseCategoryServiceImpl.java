@@ -37,4 +37,14 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService{
         ExpenseCategory expenseCategory = expenseCategoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("ExpenseCategory", "Id", id));
         return expenseCategory;
     }
+
+    @Override
+    public ExpenseCategory update(ExpenseCategory expenseCategory, long id) {
+        ExpenseCategory existedExpenseCategory = expenseCategoryRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("ExpenseCategory", "Id", id));
+        existedExpenseCategory.setMaxExpense(expenseCategory.getMaxExpense());
+        existedExpenseCategory.setName(expenseCategory.getName());
+        ExpenseCategory updatedExpenseCategory = expenseCategoryRepository.save(expenseCategory);
+        return updatedExpenseCategory;
+    }
 }

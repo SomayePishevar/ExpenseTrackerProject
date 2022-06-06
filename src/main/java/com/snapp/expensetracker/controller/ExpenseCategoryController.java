@@ -52,4 +52,13 @@ public class ExpenseCategoryController {
         ExpenseCategoryDto expenseCategoryDto = mapper.map(expenseCategory, ExpenseCategoryDto.class);
         return new ResponseEntity<>(expenseCategoryDto, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/expenseCategories/{id}")
+    public ResponseEntity<ExpenseCategoryDto> updateCategory(@Valid @RequestBody ExpenseCategoryDto expenseCategoryDto, @PathVariable("id") long id){
+        ExpenseCategory expenseCategory = mapper.map(expenseCategoryDto, ExpenseCategory.class);
+        ExpenseCategory updatedExpenseCategory = expenseCategoryService.update(expenseCategory, id);
+        ExpenseCategoryDto updatedExpenseCategoryDto = mapper.map(updatedExpenseCategory, ExpenseCategoryDto.class);
+        return new ResponseEntity<>(updatedExpenseCategoryDto, HttpStatus.OK);
+    }
 }
