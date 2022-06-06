@@ -14,9 +14,15 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService{
     private JpaExpenseCategoryRepository expenseCategoryRepository;
 
     @Override
+    public List<ExpenseCategory> getAllExpenseCategories() {
+        List<ExpenseCategory> expenseCategoryList = expenseCategoryRepository.getAllExpenseCategories();
+        return expenseCategoryList ;
+    }
+
+    @Override
     public List<String> getAllExpenseCategoryName() {
-        List<String> expenseCategoryName = expenseCategoryRepository.getAllExpenseCategoryName();
-        return expenseCategoryName ;
+        List<String> expenseCategoryNameList = expenseCategoryRepository.getAllExpenseCategoryNames();
+        return expenseCategoryNameList ;
     }
 
     @Override

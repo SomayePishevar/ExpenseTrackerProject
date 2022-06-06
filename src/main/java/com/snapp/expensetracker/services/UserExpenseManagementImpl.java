@@ -30,38 +30,38 @@ public class UserExpenseManagementImpl implements UserExpenseManagement{
 
     @Override
     public String addExpense(UserExpenseDto userExpenseDto) throws UserNotFoundException {
-        try {
-            User user = userRepository.findByUsername(userExpenseDto.getUsername());
-            if (user == null){
-                throw new UserNotFoundException(userExpenseDto.getUsername());
-            }
-            ExpenseCategory expenseCategory = new ExpenseCategory();
-            List<String> expenseCategorynames = expenseCategoryRepository.getAllExpenseCategoryName();
-            String expenseCategoryName = null;
-            for (String name : expenseCategorynames){
-                if (userExpenseDto.getExpenseCategory().equals(name)){
-                    expenseCategoryName = name;
-                }
-            }
-            if (expenseCategoryName == null){
-                throw new CategoryNotFoundException(userExpenseDto.getExpenseCategory());
-            }else {
-                expenseCategory = expenseCategoryRepository.findByName(expenseCategoryName);
-            }
-
-            UserExpense userExpense = UserExpense.builder()
-                    .user(user)
-                    .expenseCategory(expenseCategory)
-                    .expenseAmount(userExpenseDto.getExpenseAmount())
-                    .expenseDate(userExpenseDto.getExpenseDate())
-                    .startCalculateExpenseDate(userExpenseDto.getStartCalculateExpenseDate())
-                    .build();
-
-            userExpenseRepository.save(userExpense);
-            return checkAlert(userExpense);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            User user = userRepository.findByUsername(userExpenseDto.getUsername());
+//            if (user == null){
+//                throw new UserNotFoundException(userExpenseDto.getUsername());
+//            }
+//            ExpenseCategory expenseCategory = new ExpenseCategory();
+//            List<ExpenseCategory> expenseCategoryList = expenseCategoryRepository.getAllExpenseCategoryName();
+//            String expenseCategoryName = null;
+//            for (String name : expenseCategoryList.){
+//                if (userExpenseDto.getExpenseCategory().equals(name)){
+//                    expenseCategoryName = name;
+//                }
+//            }
+//            if (expenseCategoryName == null){
+//                throw new CategoryNotFoundException(userExpenseDto.getExpenseCategory());
+//            }else {
+//                expenseCategory = expenseCategoryRepository.findByName(expenseCategoryName);
+//            }
+//
+//            UserExpense userExpense = UserExpense.builder()
+//                    .user(user)
+//                    .expenseCategory(expenseCategory)
+//                    .expenseAmount(userExpenseDto.getExpenseAmount())
+//                    .expenseDate(userExpenseDto.getExpenseDate())
+//                    .startCalculateExpenseDate(userExpenseDto.getStartCalculateExpenseDate())
+//                    .build();
+//
+//            userExpenseRepository.save(userExpense);
+//            return checkAlert(userExpense);
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
         return null;
     }
 

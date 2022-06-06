@@ -10,7 +10,10 @@ import java.util.List;
 @Repository
 public interface JpaExpenseCategoryRepository extends JpaRepository<ExpenseCategory, Long>{
     @Query("Select c.name from ExpenseCategory c")
-    List<String> getAllExpenseCategoryName();
+    List<String> getAllExpenseCategoryNames();
+
+    @Query("Select c from ExpenseCategory c")
+    List<ExpenseCategory> getAllExpenseCategories();
 
     ExpenseCategory findByName(String name);
 }
