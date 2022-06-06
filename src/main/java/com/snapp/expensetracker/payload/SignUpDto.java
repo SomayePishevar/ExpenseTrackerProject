@@ -1,11 +1,12 @@
 package com.snapp.expensetracker.payload;
 
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class UserDto {
+public class SignUpDto {
 
     private String username;
 

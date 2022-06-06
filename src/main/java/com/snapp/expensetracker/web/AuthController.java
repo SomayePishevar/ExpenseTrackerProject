@@ -1,22 +1,25 @@
 package com.snapp.expensetracker.web;
 
 import com.snapp.expensetracker.JwtTokenProvider;
+import com.snapp.expensetracker.common.RoleEnum;
+import com.snapp.expensetracker.entity.User;
 import com.snapp.expensetracker.payload.JWTAuthResponse;
 import com.snapp.expensetracker.payload.LoginDto;
-import com.snapp.expensetracker.services.SecurityService;
+import com.snapp.expensetracker.payload.SignUpDto;
 import com.snapp.expensetracker.services.UserService;
 import com.snapp.expensetracker.validator.UserDataValidator;
-import com.snapp.expensetracker.payload.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,9 +27,6 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private SecurityService securityService;
 
     @Autowired
     private UserDataValidator userDataValidator;
@@ -37,30 +37,8 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping("/registration")
-    public String registration(Model model){
-        model.addAttribute("userForm", new UserDto());
-        return "registration";
-    }
-
-    @PostMapping("/registration/admin")
-    public String adminRegistration(@ModelAttribute("userForm") UserDto userForm, BindingResult bindingResult){
-        userDataValidator.validate(userForm, bindingResult);
-
-        if (bindingResult.hasErrors()){
-            return "registration";
-        }
-
-        userService.saveAdmin(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getPassword());
-
-        return "redirect:/welcome";
-    }
-
-    @GetMapping("/welcome")
-    public String welcome(Model model){
-        return "welcome";
-    }
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<JWTAuthResponse> usthenticateUser(@RequestBody LoginDto loginDto){
@@ -71,5 +49,39 @@ public class AuthController {
         String token = jwtTokenProvider.generateToken(authentication);
 
         return ResponseEntity.ok(new JWTAuthResponse(token));
+    }
+
+    @PostMapping("/registration/admin")
+    public ResponseEntity<?> adminRegistration(@RequestBody SignUpDto signUpDto){
+        try {
+            userDataValidator.validateSignUpData(signUpDto);
+            User user = User.builder()
+                    .username(signUpDto.getUsername())
+                    .password(bCryptPasswordEncoder.encode(signUpDto.getPassword()))
+                    .phoneNumber(signUpDto.getPhoneNumber())
+                    .role(RoleEnum.ADMIN)
+                    .build();
+            userService.saveAdmin(user);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Admin registered successfully" , HttpStatus.OK);
+    }
+
+    @PostMapping("/registration/user")
+    public ResponseEntity<?> userRegistration(@RequestBody SignUpDto signUpDto){
+        try {
+            userDataValidator.validateSignUpData(signUpDto);
+            User user = User.builder()
+                    .username(signUpDto.getUsername())
+                    .password(bCryptPasswordEncoder.encode(signUpDto.getPassword()))
+                    .phoneNumber(signUpDto.getPhoneNumber())
+                    .role(RoleEnum.USER)
+                    .build();
+            userService.saveUser(user);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("User registered successfully" , HttpStatus.OK);
     }
 }
