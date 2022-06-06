@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class DuplicatedInputException extends Exception {
+public class DuplicatedInputException extends RuntimeException {
 
     private String message;
 

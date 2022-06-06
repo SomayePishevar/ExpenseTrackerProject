@@ -9,4 +9,5 @@ public interface ExpenseCategoryService {
     List<String> getAllExpenseCategoryName();
     List<ExpenseCategory> getAllExpenseCategories();
     ExpenseCategory save(ExpenseCategory expenseCategory);
+    ExpenseCategory findById(long id);
 }

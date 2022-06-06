@@ -27,7 +27,7 @@ public class ExpenseCategoryController {
 
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/expenseCategory")
+    @PostMapping("/expenseCategories")
     public ResponseEntity<ExpenseCategoryDto> createCategory(@Valid @RequestBody ExpenseCategoryDto expenseCategoryDto){
         ExpenseCategory expenseCategory = mapper.map(expenseCategoryDto, ExpenseCategory.class);
         ExpenseCategory newExpenseCategory = expenseCategoryService.save(expenseCategory);
@@ -35,7 +35,7 @@ public class ExpenseCategoryController {
         return new ResponseEntity<>(newExpenseCategoryDto, HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/expenseCategory")
+    @GetMapping("/expenseCategories")
     public ResponseEntity<List<ExpenseCategoryDto>> getAllCategory(){
         List<ExpenseCategory> expenseCategoryList = expenseCategoryService.getAllExpenseCategories();
         List<ExpenseCategoryDto> expenseCategoryDtoList = new ArrayList<>();
@@ -44,5 +44,12 @@ public class ExpenseCategoryController {
             expenseCategoryDtoList.add(expenseCategoryDto);
         }
         return new ResponseEntity<>(expenseCategoryDtoList, HttpStatus.OK);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/expenseCategories/{id}")
+    public ResponseEntity<ExpenseCategoryDto> getCategoryById(@PathVariable("id") long id){
+        ExpenseCategory expenseCategory = expenseCategoryService.findById(id);
+        ExpenseCategoryDto expenseCategoryDto = mapper.map(expenseCategory, ExpenseCategoryDto.class);
+        return new ResponseEntity<>(expenseCategoryDto, HttpStatus.OK);
     }
 }
