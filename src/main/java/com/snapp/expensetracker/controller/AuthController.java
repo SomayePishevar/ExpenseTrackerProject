@@ -1,4 +1,4 @@
-package com.snapp.expensetracker.web;
+package com.snapp.expensetracker.controller;
 
 import com.snapp.expensetracker.JwtTokenProvider;
 import com.snapp.expensetracker.common.RoleEnum;
