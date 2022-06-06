@@ -8,7 +8,7 @@ import com.snapp.expensetracker.repository.JpaUserExpenseRepository;
 import com.snapp.expensetracker.repository.JpaUserRepository;
 import com.snapp.expensetracker.validator.exception.CategoryNotFoundException;
 import com.snapp.expensetracker.validator.exception.UserNotFoundException;
-import com.snapp.expensetracker.web.dto.UserExpenseDto;
+import com.snapp.expensetracker.payload.UserExpenseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

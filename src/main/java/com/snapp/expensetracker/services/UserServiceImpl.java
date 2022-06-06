@@ -3,7 +3,7 @@ package com.snapp.expensetracker.services;
 import com.snapp.expensetracker.common.RoleEnum;
 import com.snapp.expensetracker.entity.User;
 import com.snapp.expensetracker.repository.JpaUserRepository;
-import com.snapp.expensetracker.web.dto.UserDto;
+import com.snapp.expensetracker.payload.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

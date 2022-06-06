@@ -1,4 +1,4 @@
-package com.snapp.expensetracker.web.dto;
+package com.snapp.expensetracker.payload;
 
 
 import com.snapp.expensetracker.entity.User;
