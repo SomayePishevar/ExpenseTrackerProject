@@ -11,4 +11,5 @@ public interface ExpenseCategoryService {
     ExpenseCategory save(ExpenseCategory expenseCategory);
     ExpenseCategory findById(long id);
     ExpenseCategory update(ExpenseCategory expenseCategory, long id);
+    void deleteById(long id);
 }

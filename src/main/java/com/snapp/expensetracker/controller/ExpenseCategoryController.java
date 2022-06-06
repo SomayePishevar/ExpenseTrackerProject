@@ -61,4 +61,10 @@ public class ExpenseCategoryController {
         ExpenseCategoryDto updatedExpenseCategoryDto = mapper.map(updatedExpenseCategory, ExpenseCategoryDto.class);
         return new ResponseEntity<>(updatedExpenseCategoryDto, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/expenseCategories/{id}")
+    public ResponseEntity<String> deleteCategory(@PathVariable("id") long id){
+        expenseCategoryService.deleteById(id);
+        return new ResponseEntity<>("category deleted successfully", HttpStatus.OK);
+    }
 }
