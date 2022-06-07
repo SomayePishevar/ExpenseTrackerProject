@@ -6,7 +6,7 @@ import com.snapp.expensetracker.entity.UserExpense;
 import com.snapp.expensetracker.repository.JpaExpenseCategoryRepository;
 import com.snapp.expensetracker.repository.JpaUserExpenseRepository;
 import com.snapp.expensetracker.repository.JpaUserRepository;
-import com.snapp.expensetracker.validator.exception.ResourceNotFoundException;
+import com.snapp.expensetracker.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

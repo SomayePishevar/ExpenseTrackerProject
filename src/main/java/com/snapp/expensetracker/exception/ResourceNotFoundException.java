@@ -1,4 +1,4 @@
-package com.snapp.expensetracker.validator.exception;
+package com.snapp.expensetracker.exception;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

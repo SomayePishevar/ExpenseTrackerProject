@@ -54,18 +54,15 @@ public class AuthController {
 
     @PostMapping("/registration")
     public ResponseEntity<?> userRegistration(@RequestBody SignUpDto signUpDto){
-        try {
-            userDataValidator.validateSignUpData(signUpDto);
-            User user = User.builder()
-                    .username(signUpDto.getUsername())
-                    .password(bCryptPasswordEncoder.encode(signUpDto.getPassword()))
-                    .phoneNumber(signUpDto.getPhoneNumber())
-                    .role(RoleEnum.USER)
-                    .build();
-            userService.saveUser(user);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+
+        userDataValidator.validateSignUpData(signUpDto);
+        User user = User.builder()
+                .username(signUpDto.getUsername())
+                .password(bCryptPasswordEncoder.encode(signUpDto.getPassword()))
+                .phoneNumber(signUpDto.getPhoneNumber())
+                .role(RoleEnum.USER)
+                .build();
+        userService.saveUser(user);
         return new ResponseEntity<>("User registered successfully" , HttpStatus.OK);
     }
 }

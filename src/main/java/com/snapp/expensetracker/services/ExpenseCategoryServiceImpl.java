@@ -2,7 +2,7 @@ package com.snapp.expensetracker.services;
 
 import com.snapp.expensetracker.entity.ExpenseCategory;
 import com.snapp.expensetracker.repository.JpaExpenseCategoryRepository;
-import com.snapp.expensetracker.validator.exception.ResourceNotFoundException;
+import com.snapp.expensetracker.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

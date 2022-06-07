@@ -2,8 +2,8 @@ package com.snapp.expensetracker.validator;
 
 import com.snapp.expensetracker.repository.JpaUserRepository;
 import com.snapp.expensetracker.payload.SignUpDto;
-import com.snapp.expensetracker.validator.exception.DuplicatedInputException;
-import com.snapp.expensetracker.validator.exception.InvalidInputDataFormatException;
+import com.snapp.expensetracker.exception.DuplicatedInputException;
+import com.snapp.expensetracker.exception.InvalidInputDataFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

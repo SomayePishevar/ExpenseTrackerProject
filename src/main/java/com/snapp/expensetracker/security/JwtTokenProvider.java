@@ -1,6 +1,6 @@
 package com.snapp.expensetracker.security;
 
-import com.snapp.expensetracker.validator.exception.ExpenseTrackerApiException;
+import com.snapp.expensetracker.exception.ExpenseTrackerApiException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
