@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/userOperation")
 public class UserExpenseManagementController {
 
 

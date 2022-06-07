@@ -1,6 +1,6 @@
 package com.snapp.expensetracker.controller;
 
-import com.snapp.expensetracker.JwtTokenProvider;
+import com.snapp.expensetracker.security.JwtTokenProvider;
 import com.snapp.expensetracker.common.RoleEnum;
 import com.snapp.expensetracker.entity.User;
 import com.snapp.expensetracker.payload.JWTAuthResponse;
@@ -41,7 +41,7 @@ public class AuthController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<JWTAuthResponse> usthenticateUser(@RequestBody LoginDto loginDto){
+    public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
                 (loginDto.getUsername(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -51,24 +51,8 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
-    @PostMapping("/registration/admin")
-    public ResponseEntity<?> adminRegistration(@RequestBody SignUpDto signUpDto){
-        try {
-            userDataValidator.validateSignUpData(signUpDto);
-            User user = User.builder()
-                    .username(signUpDto.getUsername())
-                    .password(bCryptPasswordEncoder.encode(signUpDto.getPassword()))
-                    .phoneNumber(signUpDto.getPhoneNumber())
-                    .role(RoleEnum.ADMIN)
-                    .build();
-            userService.saveAdmin(user);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("Admin registered successfully" , HttpStatus.OK);
-    }
 
-    @PostMapping("/registration/user")
+    @PostMapping("/registration")
     public ResponseEntity<?> userRegistration(@RequestBody SignUpDto signUpDto){
         try {
             userDataValidator.validateSignUpData(signUpDto);
