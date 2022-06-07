@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  app:
+    container_name: expense-tracker
+    build: ./
+    image: 'expense-tracker:latest'
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/expensetracker
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    container_name: db
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=expensetracker
