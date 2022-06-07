@@ -69,7 +69,7 @@ public class ExpenseCategoryController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/expenseCategories")
+    @GetMapping("/expenseCategories/names")
     public ResponseEntity<List<String>> getAllCategoryNames(){
         List<String> expenseCategoryNameList = expenseCategoryService.getAllExpenseCategoryName();
         return new ResponseEntity<>(expenseCategoryNameList, HttpStatus.OK);
