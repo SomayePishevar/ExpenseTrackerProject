@@ -32,9 +32,16 @@ public class DataLoader implements ApplicationRunner {
 
         userRepository.save(User.builder()
                 .username("admin")
-                .password(bCryptPasswordEncoder.encode("admin"))
+                .password(bCryptPasswordEncoder.encode("adminpassword"))
                 .role(RoleEnum.ADMIN)
                 .phoneNumber("+989196263580")
+                .build());
+
+        userRepository.save(User.builder()
+                .username("somaye")
+                .password(bCryptPasswordEncoder.encode("123456"))
+                .role(RoleEnum.USER)
+                .phoneNumber("+989196263570")
                 .build());
 
         Set<ExpenseCategory> expenseCategoryList = new HashSet<>() ;

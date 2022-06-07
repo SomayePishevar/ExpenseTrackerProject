@@ -26,7 +26,7 @@ public class ExpenseCategoryController {
 
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/expenseCategories")
     public ResponseEntity<ExpenseCategoryDto> createCategory(@Valid @RequestBody ExpenseCategoryDto expenseCategoryDto){
         ExpenseCategory expenseCategory = mapper.map(expenseCategoryDto, ExpenseCategory.class);
@@ -34,7 +34,7 @@ public class ExpenseCategoryController {
         ExpenseCategoryDto newExpenseCategoryDto = mapper.map(newExpenseCategory, ExpenseCategoryDto.class);
         return new ResponseEntity<>(newExpenseCategoryDto, HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/expenseCategories")
     public ResponseEntity<List<ExpenseCategoryDto>> getAllCategory(){
         List<ExpenseCategory> expenseCategoryList = expenseCategoryService.getAllExpenseCategories();
@@ -45,7 +45,7 @@ public class ExpenseCategoryController {
         }
         return new ResponseEntity<>(expenseCategoryDtoList, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/expenseCategories/{id}")
     public ResponseEntity<ExpenseCategoryDto> getCategoryById(@PathVariable("id") long id){
         ExpenseCategory expenseCategory = expenseCategoryService.findById(id);
@@ -53,7 +53,7 @@ public class ExpenseCategoryController {
         return new ResponseEntity<>(expenseCategoryDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/expenseCategories/{id}")
     public ResponseEntity<ExpenseCategoryDto> updateCategory(@Valid @RequestBody ExpenseCategoryDto expenseCategoryDto, @PathVariable("id") long id){
         ExpenseCategory expenseCategory = mapper.map(expenseCategoryDto, ExpenseCategory.class);
@@ -61,14 +61,14 @@ public class ExpenseCategoryController {
         ExpenseCategoryDto updatedExpenseCategoryDto = mapper.map(updatedExpenseCategory, ExpenseCategoryDto.class);
         return new ResponseEntity<>(updatedExpenseCategoryDto, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/expenseCategories/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable("id") long id){
         expenseCategoryService.deleteById(id);
         return new ResponseEntity<>("category deleted successfully", HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/expenseCategories/names")
     public ResponseEntity<List<String>> getAllCategoryNames(){
         List<String> expenseCategoryNameList = expenseCategoryService.getAllExpenseCategoryName();

@@ -1,11 +1,15 @@
 package com.snapp.expensetracker.payload;
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExpenseCategoryDto {
 
     private Long Id;
@@ -14,5 +18,5 @@ public class ExpenseCategoryDto {
     private String name;
 
     @NotNull
-    private BigInteger maxAmount;
+    private BigInteger maxExpense;
 }

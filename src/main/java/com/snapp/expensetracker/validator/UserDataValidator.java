@@ -31,18 +31,18 @@ public class UserDataValidator {
         if (signUpDto.getPassword().length() < 6 || signUpDto.getUsername().length() > 10) {
             throw new InvalidInputDataFormatException("password must be between 6 and 10 characters.");
         }
-        if (signUpDto.getPassword().equals(signUpDto.getConfirmPassword())){
+        if (!signUpDto.getPassword().equals(signUpDto.getConfirmPassword())){
             throw new InvalidInputDataFormatException("password and password confirmation are not the same ");
         }
 
         if (signUpDto.getPhoneNumber().isEmpty() || signUpDto.getPhoneNumber() == null){
             throw new InvalidInputDataFormatException("phone number could not be empty or null.");
         }
-        if (!(signUpDto.getUsername().length() == 13 && signUpDto.getPhoneNumber().startsWith("+989"))) {
+        if (!(signUpDto.getPhoneNumber().length() == 13 && signUpDto.getPhoneNumber().startsWith("+989"))) {
             throw new InvalidInputDataFormatException("phone number must be 13 characters and start with +989.");
         }
         if (userRepository.findByPhoneNumber(signUpDto.getPhoneNumber())!=null){
-            throw new DuplicatedInputException(signUpDto.getPhoneNumber() + " has been selected before");
+            throw new DuplicatedInputException(signUpDto.getPhoneNumber() + " has been registered before");
         }
     }
 }

@@ -23,7 +23,7 @@ public class UserExpenseManagementController {
     @Autowired
     private UserExpenseManagementService userExpenseManagementService;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/expenseManagement")
     public ResponseEntity<String> addExpense(@Valid @RequestBody UserExpenseDto userExpenseDto, Principal principal){
         UserExpense userExpense = UserExpense.builder()

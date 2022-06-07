@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface JpaUserExpenseRepository extends JpaRepository<UserExpense, Long> {
 
-    @Query(value = "select sum(e.expenseAmount) from UserExpense e where e.expenseDate >= trunc(SYSDATE) - startdate and e.expenseCategory in expenseCategories and e.user = user", nativeQuery = true)
+    @Query(value = "select sum(e.expenseAmount) from UserExpense e where e.expenseDate in (trunc(SYSDATE) - startdate) and e.expenseCategory in expenseCategories and e.user = user", nativeQuery = true)
     BigInteger periodicSumOfExpenses(@Param("expenseDate") Date expenseDate, @Param("startDate") Date startDate, @Param("expenseCategories") List<ExpenseCategory> expenseCategories, @Param("user") User user);
 
     @Query(value = "select sum(e.expenseAmount) from UserExpense e having e.expenseDate >= trunc(SYSDATE) - startdate and e.user = user and e.expenseCategory in expenseCategories group by expenseCategories ", nativeQuery = true)
