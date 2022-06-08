@@ -38,7 +38,7 @@ public class DataLoader implements ApplicationRunner {
                 .build());
 
         userRepository.save(User.builder()
-                .username("somaye")
+                .username("user")
                 .password(bCryptPasswordEncoder.encode("123456"))
                 .role(RoleEnum.USER)
                 .phoneNumber("+989196263570")
