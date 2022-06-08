@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +47,9 @@ public class UserExpenseManagementServiceImpl implements UserExpenseManagementSe
     }
 
     private String checkAlert(UserExpense userExpense){
-        List<ExpenseCategory> expenseCategories = new ArrayList<>();
-        expenseCategories.add(userExpense.getExpenseCategory());
-        BigInteger expenseCount = userExpenseRepository.periodicSumOfExpenses(userExpense.getExpenseDate(), userExpense.getStartCalculateExpenseDate(), expenseCategories, userExpense.getUser());
+
+        BigInteger expenseCount = userExpenseRepository.periodicSumOfExpenses(new Timestamp(userExpense.getStartCalculateExpenseDate().getTime()),
+                userExpense.getExpenseCategory().getId(), userExpense.getUser().getId());
         int compareResult = userExpense.getExpenseCategory().getMaxExpense().compareTo(expenseCount);
         if (compareResult == -1 ){
             return "you have reached your maximum expense limitation";
