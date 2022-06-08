@@ -8,6 +8,8 @@ import com.snapp.expensetracker.payload.LoginDto;
 import com.snapp.expensetracker.payload.SignUpDto;
 import com.snapp.expensetracker.services.UserService;
 import com.snapp.expensetracker.validator.UserDataValidator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@Api(tags = "User Authentication")
 public class AuthController {
 
     @Autowired
@@ -40,6 +43,7 @@ public class AuthController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @ApiOperation(value = "This method is used to authenticate user for login operation.")
     @PostMapping("/login")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
@@ -51,7 +55,7 @@ public class AuthController {
         return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
-
+    @ApiOperation(value = "This method is used to sign up user to application.")
     @PostMapping("/registration")
     public ResponseEntity<?> userRegistration(@RequestBody SignUpDto signUpDto){
 

@@ -3,6 +3,8 @@ package com.snapp.expensetracker.controller;
 import com.snapp.expensetracker.entity.UserExpense;
 import com.snapp.expensetracker.payload.UserExpenseDto;
 import com.snapp.expensetracker.services.UserExpenseManagementService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,14 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/userOperation")
+@Api(tags = "User Expense Management")
 public class UserExpenseManagementController {
 
 
     @Autowired
     private UserExpenseManagementService userExpenseManagementService;
 
+    @ApiOperation(value = "This method is used to add a new spent expense amount of a category.")
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/expenseManagement")
     public ResponseEntity<String> addExpense(@Valid @RequestBody UserExpenseDto userExpenseDto, Principal principal){

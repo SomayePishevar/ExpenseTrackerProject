@@ -3,6 +3,8 @@ package com.snapp.expensetracker.controller;
 import com.snapp.expensetracker.entity.ExpenseCategory;
 import com.snapp.expensetracker.payload.ExpenseCategoryDto;
 import com.snapp.expensetracker.services.ExpenseCategoryService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/adminOperation")
+@Api(tags = "Expense Category CRUD")
 public class ExpenseCategoryController {
 
     @Autowired
@@ -25,7 +28,7 @@ public class ExpenseCategoryController {
     private ExpenseCategoryService expenseCategoryService;
 
 
-
+    @ApiOperation(value = "This method is used to add a new expense category.")
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/expenseCategories")
     public ResponseEntity<ExpenseCategoryDto> createCategory(@Valid @RequestBody ExpenseCategoryDto expenseCategoryDto){
@@ -34,6 +37,8 @@ public class ExpenseCategoryController {
         ExpenseCategoryDto newExpenseCategoryDto = mapper.map(newExpenseCategory, ExpenseCategoryDto.class);
         return new ResponseEntity<>(newExpenseCategoryDto, HttpStatus.CREATED);
     }
+
+    @ApiOperation(value = "This method is used to get all expense categories.")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/expenseCategories")
     public ResponseEntity<List<ExpenseCategoryDto>> getAllCategory(){
@@ -45,6 +50,8 @@ public class ExpenseCategoryController {
         }
         return new ResponseEntity<>(expenseCategoryDtoList, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "This method is used to get expense category by Id.")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/expenseCategories/{id}")
     public ResponseEntity<ExpenseCategoryDto> getCategoryById(@PathVariable("id") long id){
@@ -53,6 +60,7 @@ public class ExpenseCategoryController {
         return new ResponseEntity<>(expenseCategoryDto, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "This method is used to update expense category by its Id.")
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/expenseCategories/{id}")
     public ResponseEntity<ExpenseCategoryDto> updateCategory(@Valid @RequestBody ExpenseCategoryDto expenseCategoryDto, @PathVariable("id") long id){
@@ -61,6 +69,8 @@ public class ExpenseCategoryController {
         ExpenseCategoryDto updatedExpenseCategoryDto = mapper.map(updatedExpenseCategory, ExpenseCategoryDto.class);
         return new ResponseEntity<>(updatedExpenseCategoryDto, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "This method is used to delete expense category by its Id.")
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/expenseCategories/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable("id") long id){
@@ -68,6 +78,7 @@ public class ExpenseCategoryController {
         return new ResponseEntity<>("category deleted successfully", HttpStatus.OK);
     }
 
+    @ApiOperation(value = "This method is used to get the name of all expense categories.")
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/expenseCategories/names")
     public ResponseEntity<List<String>> getAllCategoryNames(){
